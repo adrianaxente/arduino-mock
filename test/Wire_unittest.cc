@@ -1,14 +1,15 @@
 #include "gtest/gtest.h"
-#include "arduino-mock/Wire.h"
-#include "arduino-mock/Arduino.h"
+#include "Wire.h"
+#include "Arduino.h"
 
 using ::testing::Return;
-TEST(Wire, access) {
+TEST(Wire, access)
+{
   uint8_t value1 = 10;
   uint8_t value2 = 12;
   char text[] = "Mock test";
-  uint8_t* callback_func = NULL;
-  WireMock* mock = WireMockInstance();
+  uint8_t *callback_func = NULL;
+  WireMock *mock = WireMockInstance();
   EXPECT_CALL(*mock, begin());
   EXPECT_CALL(*mock, beginTransmission(value1));
   EXPECT_CALL(*mock, endTransmission(value1));

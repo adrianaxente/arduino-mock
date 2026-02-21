@@ -5,14 +5,15 @@
 #define DEBUG_LOG false
 
 #include "gtest/gtest.h"
-#include "arduino-mock/Arduino.h"
+#include "Arduino.h"
 
-#include "arduino-mock/Spark.h"
+#include "Spark.h"
 
 using ::testing::StrCaseEq;
 
-TEST(publish, normal) {
-  SparkMock* sparkMock = sparkMockInstance();
+TEST(publish, normal)
+{
+  SparkMock *sparkMock = sparkMockInstance();
   int analogvalue = 10;
   int sleeptime = 20;
   uint16_t wakeUpPin = 1;

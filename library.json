@@ -1,0 +1,39 @@
+{
+    "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
+    "name": "arduino-mock",
+    "version": "1.0.0",
+    "description": "Modernized Arduino Mock for GoogleTest",
+    "keywords": "unit-testing, mock, arduino, googletest",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/adrianaxente/arduino-mock.git"
+    },
+    "authors": [
+        {
+            "name": "Adrian Axente",
+            "email": "adrianaxente@yahoo.com",
+            "url": "https://github.com/adrianaxente"
+        }
+    ],
+    "dependencies": {
+        "google/googletest": "^1.17.0"
+    },
+    "build": {
+        "includeDir": "include",
+        "libLDFMode": "deep+",
+        "srcDir": "src",
+        "flags": [
+            "-std=c++17",            
+            "-DARDUINO=100",
+            "-Iinclude",
+            "-include iomanip"
+        ]
+    },
+    "srcFilter": [
+      "+<*>",
+      "-<test/*>"
+    ],
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "native"
+}

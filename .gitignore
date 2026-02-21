@@ -1,72 +1,47 @@
-# Ignore editor backup/temps
-*~
-*.bak
-*.swp
+# Prerequisites
+*.d
 
 # Compiled Object files
 *.slo
 *.lo
 *.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
 
 # Compiled Static libraries
 *.lai
 *.la
 *.a
-
-# Cmake files
-CMakeCache.txt
-CMakeFiles
-cmake_install.cmake
-install_manifest.txt
-CTestTestfile.cmake
-
-#ignore thumbnails created by windows
-Thumbs.db
-#Ignore files build by Visual Studio
-*.obj
-*.exe
-*.pdb
-*.user
-*.aps
-*.pch
-*.vspscc
-*_i.c
-*_p.c
-*.ncb
-*.suo
-*.tlb
-*.tlh
-*.bak
-*.cache
-*.ilk
-*.log
-*.pyc
-[Bb]in
-[Dd]ebug*/
 *.lib
-*.sbr
-*.swp
-obj/
-[Rr]elease*/
-_ReSharper*/
-[Tt]est[Rr]esult*
-build*/
-*~
 
-#ignore executable binaries
-test/test_all
+# Executables
+*.exe
+*.out
+*.app
 
-#ignore external lib
-/lib/gmock/gmock/
-/lib/gtest/gtest/
+# debug information files
+*.dwo
 
-#ignore debug symbols
-*.gcda
-*.gcno
+#VSCode Files
+.vscode
 
-.idea/
-cmake-build-*/
+#PlatformIO Files
+.pio

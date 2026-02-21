@@ -1,63 +1,88 @@
+# Arduino Mock Library for PlatformIO
 
-arduino-mock
-============
+A simple, header-only mock library for the core Arduino API. This library is intended to be used with the [PlatformIO](https://platformio.org/) `native` development platform and the [Google Test](https://github.com/google/googletest) framework.
 
-A GMock stub library for a mock of Arduino libraries.
+It allows you to compile and run unit tests for your Arduino source code on your host machine, without needing to upload to physical hardware.
 
-How it works
-============
+## Features
 
-This is the mock library for Arduino sketch program.
-To run unittest for this mock, please follow this
-instruction.
+This library provides mock implementations for the following Arduino components:
+- `Arduino.h` (digitalRead, digitalWrite, pinMode, etc.)
+- `Serial.h`
+- `SPI.h`
+- `Wire.h` (I2C)
+- `EEPROM.h`
+- `WiFi.h`
+- `Spark.h`
+- `Stream.h`
+- `Print.h`
 
-    
+## How to Use
 
-Sample and how to install to your app
-====================================
+To use this library for your unit tests, you need to configure your `platformio.ini` to use the `native` platform and Google Test.
 
-Sample CMakeLists.txt, Using catch2 and google mock:
+### 1. Configure `platformio.ini`
 
-    FetchContent_Declare(Catch2
-            GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-            GIT_TAG v2.11.1)
+Add a test environment to your `platformio.ini` file that specifies the `native` platform and sets `googletest` as the test framework.
 
-    FetchContent_MakeAvailable(Catch2)
+```ini
+[env:test_native]
+platform = native
+framework = googletest
+lib_deps =
+    adrianaxente/arduino-mock
+    google/googletest
+```
 
-    FetchContent_Declare(googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.10.0)
+### 2. Write Your Tests
 
-    FetchContent_MakeAvailable(googletest)
-    
-    FetchContent_Declare(arduino-mock
-            GIT_REPOSITORY https://github.com/balp/arduino-mock.git
-            GIT_TAG cmake3)
+Create your test files in the `test` directory. Your test code should include `gtest/gtest.h` and the specific Arduino headers your code uses. The PlatformIO build system will automatically use the mock versions from this library when building for the `native` platform.
 
-    FetchContent_MakeAvailable(arduino-mock)
+**Example (`test/test_my_code.cpp`):**
 
-    add_executable(tests
-            main.cpp
-            tests.cpp)
-    
-    target_link_libraries(tests
-            Catch2::Catch2
-            arduino_mock)
-    
-    target_compile_features(tests PUBLIC cxx_std_11)
-    set_target_properties(tests PROPERTIES CXX_EXTENSIONS OFF)
-    
-    add_test(NAME tests
-             COMMAND tests)
+```cpp
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+#include "Arduino.h"
 
+using ::testing::Return;
 
+TEST(digitalRead, 2)
+{
+  ArduinoMock *arduinoMock = arduinoMockInstance();
+  EXPECT_CALL(*arduinoMock, digitalRead(2)).WillOnce(Return(1));
+  digitalRead(2);
+  releaseArduinoMock();
+}
 
+TEST(delay, normal)
+{
+  ArduinoMock *arduinoMock = arduinoMockInstance();
+  EXPECT_CALL(*arduinoMock, delay(1));
+  delay(1);
+  releaseArduinoMock();
+}
 
+int main(int argc, char **argv)
+{
+    // 1. Initialize GoogleTest
+    ::testing::InitGoogleTest(&argc, argv);
 
+    // 2. Initialize GoogleMock (Critical for arduino-mock to work)
+    ::testing::InitGoogleMock(&argc, argv);
 
-Contribution
-============
+    // 3. Run all tests found in your files
+    return RUN_ALL_TESTS();
+}
 
-Please send a pull-request.  
+```
 
+### 3. Run the Tests
 
+Execute the tests from your terminal using the PlatformIO CLI:
+
+```shell
+platformio test -e test_native
+```
+
+This command will compile your source code and the tests using your native compiler (e.g., GCC, Clang) and run the resulting executable.

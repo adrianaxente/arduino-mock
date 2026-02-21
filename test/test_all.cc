@@ -1,12 +1,14 @@
-#include "Arduino_unittest.cc"
-#include "EEPROM_unittest.cc"
-#include "Serial_unittest.cc"
-#include "serialHelper_unittest.cc"
-#include "Spark_unittest.cc"
-#include "WiFi_unittest.cc"
-#include "Wire_unittest.cc"
-#include "SPI_unittest.cc"
-int main(int argc, char* argv[]) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
+
+int main(int argc, char **argv)
+{
+    // 1. Initialize GoogleTest
+    ::testing::InitGoogleTest(&argc, argv);
+
+    // 2. Initialize GoogleMock (Critical for arduino-mock to work)
+    ::testing::InitGoogleMock(&argc, argv);
+
+    // 3. Run all tests found in your files
+    return RUN_ALL_TESTS();
 }
