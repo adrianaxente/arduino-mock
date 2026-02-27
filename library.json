@@ -1,7 +1,7 @@
 {
     "$schema": "https://raw.githubusercontent.com/platformio/platformio-core/develop/platformio/assets/schema/library.json",
     "name": "arduino-mock",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Modernized Arduino Mock for GoogleTest",
     "keywords": "unit-testing, mock, arduino, googletest",
     "repository": {

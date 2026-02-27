@@ -54,6 +54,7 @@
   {                  \
     (void)(expr);    \
   } while (0)
+
 #define F(x) (x)
 
 typedef uint8_t boolean;
@@ -152,9 +153,14 @@ public:
   MOCK_METHOD1(digitalRead, int(int));
   MOCK_METHOD1(analogRead, int(int));
   MOCK_METHOD1(delay, void(int));
+  MOCK_METHOD1(delayMicroseconds, void(unsigned int));
   MOCK_METHOD0(millis, time_t());
 };
+
 ArduinoMock *arduinoMockInstance();
+ArduinoMock *arduinoMockInstanceNice();
+ArduinoMock *arduinoMockInstanceStrict();
+
 void releaseArduinoMock();
 
 #endif // __cplusplus

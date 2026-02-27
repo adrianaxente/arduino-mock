@@ -12,6 +12,27 @@ ArduinoMock *arduinoMockInstance()
   return arduinoMock;
 }
 
+using ::testing::NiceMock;
+using ::testing::StrictMock;
+
+ArduinoMock *arduinoMockInstanceNice()
+{
+  if (!arduinoMock)
+  {
+    arduinoMock = new NiceMock<ArduinoMock>();
+  }
+  return arduinoMock;
+}
+
+ArduinoMock *arduinoMockInstanceStrict()
+{
+  if (!arduinoMock)
+  {
+    arduinoMock = new StrictMock<ArduinoMock>();
+  }
+  return arduinoMock;
+}
+
 void releaseArduinoMock()
 {
   if (arduinoMock)
@@ -85,7 +106,9 @@ extern "C"
   }
   void delayMicroseconds(unsigned int us)
   {
-    UNUSED(us);
+    assert(arduinoMock != NULL);
+    arduinoMock->delayMicroseconds(us);
+    //UNUSED(us);
   }
 
   time_t pulseIn(uint8_t pin, uint8_t state, time_t timeout)
